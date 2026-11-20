@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Site QA Handoff | Wahiba Rechid</title>
+<meta name="description" content="Test a delivered website page by page and send clear, complete feedback to developers: a guided test plan, well-formed issue reports and a retest loop, with no ticketing tool.">
+<meta property="og:title" content="Site QA Handoff">
+<meta property="og:description" content="From marketing to tech: test a delivered site and report issues developers can fix without asking twice.">
+<style>
+:root{
+  --bg:#FBF8F2;--card:#fff;--ink:#18223A;--mute:#5C6478;--line:#E9E2D3;
+  --gold:#C9A45C;--gold-soft:#E3CC9A;--hero:#0D182D;--navy:#14233F;
+  --ok:#1F8A63;--warn:#B8791A;--bad:#C8412B;--info:#2B5C9E;
+  --shadow:0 1px 2px rgba(20,35,63,.05),0 10px 28px -14px rgba(20,35,63,.2);
+}
+@media (prefers-color-scheme:dark){:root{--bg:#0B1322;--card:#132038;--ink:#F5EFE3;--mute:#A3ABBD;--line:#24324F;--navy:#1B2C4D;--ok:#5FCFA0;--warn:#E8B45C;--bad:#F08A76;--info:#7FA8E0;--shadow:0 12px 32px -12px rgba(0,0,0,.6)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.hero{background:var(--hero);color:#fff;position:relative;overflow:hidden;padding:28px 0 0}
+.hero:before{content:"";position:absolute;inset:-60% -10% auto auto;width:640px;height:640px;background:radial-gradient(closest-side,rgba(201,164,92,.3),transparent)}
+.hero .wrap{position:relative}
+.top{display:flex;gap:24px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.eyebrow{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--gold-soft)}
+h1{font-size:clamp(1.7rem,4.2vw,2.5rem);line-height:1.1;letter-spacing:-.025em;margin:6px 0 8px;font-weight:800}
+.hero p{max-width:600px;margin:0;color:rgba(255,255,255,.78)}
+.side{display:grid;gap:8px;justify-items:start}
+@media(min-width:760px){.side{justify-items:end}}
+.hbtn{font:inherit;font-size:.85rem;font-weight:600;padding:7px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
+.hbtn[aria-pressed=true]{background:var(--gold-soft);color:#14233F;border-color:var(--gold-soft)}
+#saved{color:rgba(255,255,255,.65);font-size:.78rem}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sp{margin-left:auto}
+nav.tabs{display:flex;gap:4px;margin-top:22px;overflow-x:auto}
+.tabb{font:inherit;font-weight:600;font-size:.95rem;padding:11px 16px;border:0;border-radius:12px 12px 0 0;background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);cursor:pointer;white-space:nowrap;display:flex;gap:8px;align-items:center}
+.tabb small{font-size:.74rem;font-weight:700;padding:1px 7px;border-radius:99px;background:rgba(255,255,255,.16)}
+.tabb[aria-current=true]{background:var(--bg);color:var(--ink)}
+.tabb[aria-current=true] small{background:var(--line)}
+main{padding-top:24px}
+h2{font-size:1.4rem;letter-spacing:-.02em;margin:0 0 4px}
+.lead{color:var(--mute);margin:0 0 16px;max-width:720px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px;margin-bottom:14px;display:grid;gap:12px}
+.card>h3{margin:0;font-size:1.05rem;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.g2{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.fld{display:grid;gap:4px;min-width:0}
+.lab{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+input[type=text],textarea,select{font:inherit;font-size:.94rem;padding:8px 11px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:100%;min-width:0}
+textarea{resize:vertical;display:block}
+input:focus,textarea:focus,select:focus,button:focus-visible{outline:3px solid rgba(201,164,92,.7);outline-offset:1px}
+.btn{font:inherit;font-weight:600;font-size:.9rem;padding:8px 14px;border-radius:99px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.btn.main{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn.gold{background:linear-gradient(135deg,#E3CC9A,#C9A45C);color:#14233F;border-color:transparent;font-weight:700}
+.btn.x{padding:6px 10px;color:var(--mute)}
+.why{color:var(--mute);font-size:.93rem;margin:0}
+.note{padding:11px 14px;border-radius:12px;background:color-mix(in srgb,var(--gold) 13%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 45%,var(--card));font-size:.92rem}
+table.t{width:100%;border-collapse:collapse;font-size:.92rem}
+table.t th{text-align:left;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding:4px 6px}
+table.t td{padding:4px 6px;vertical-align:top}
+.tw{overflow-x:auto}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font:inherit;font-weight:600;font-size:.88rem;padding:7px 12px;border-radius:99px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.chip small{font-weight:700;color:var(--mute)}
+.chip[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy)}.chip[aria-pressed=true] small{color:var(--gold-soft)}
+.chk{display:flex;gap:8px;flex-wrap:wrap}
+.chk label{display:inline-flex;gap:6px;align-items:center;padding:6px 11px;border:1.5px solid var(--line);border-radius:99px;font-size:.88rem;font-weight:600;cursor:pointer;background:var(--bg)}
+.chk input{accent-color:var(--navy)}
+.tag{font-style:normal;font-size:.64rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:99px;white-space:nowrap;background:color-mix(in srgb,var(--t,var(--gold)) 20%,var(--card));color:var(--ink)}
+.t-block{--t:#c8412b}.t-major{--t:#d98a00}.t-minor{--t:#2B5C9E}.t-idea{--t:#7b7a94}
+.t-open{--t:#c8412b}.t-reopened{--t:#c8412b}.t-fixed{--t:#d98a00}.t-verified{--t:#1F8A63}.t-wontfix{--t:#7b7a94}
+.cat{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:6px}
+.cat:first-of-type{border-top:0;padding-top:0}
+.cat h4{margin:0 0 2px;font-size:.95rem;display:flex;gap:8px;align-items:center}
+.cat h4 small{color:var(--mute);font-weight:600}
+.test{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:5px 0}
+.test span{font-size:.94rem}
+.test .lk{font:inherit;font-size:.8rem;font-weight:700;color:var(--bad);background:none;border:0;cursor:pointer;text-decoration:underline;padding:0;margin-left:8px}
+.res{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;flex:none}
+.res button{font:inherit;font-size:.8rem;font-weight:700;padding:6px 11px;border:0;border-left:1.5px solid var(--line);background:var(--bg);color:var(--mute);cursor:pointer}
+.res button:first-child{border-left:0}
+.res button[aria-pressed=true].pass{background:var(--ok);color:#fff}
+.res button[aria-pressed=true].fail{background:var(--bad);color:#fff}
+.res button[aria-pressed=true].na{background:var(--mute);color:#fff}
+.iss{border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden}
+.ih{font:inherit;width:100%;text-align:left;background:none;border:0;color:var(--ink);cursor:pointer;padding:12px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
+.ih b{font-size:.98rem}.ih small{display:block;color:var(--mute);font-size:.82rem;font-weight:500}
+.ih .id{font-weight:800;color:var(--mute);font-size:.85rem}
+.ib{padding:4px 14px 16px;display:grid;gap:12px;border-top:1px solid var(--line)}
+.ro{display:grid;gap:8px;font-size:.93rem}
+.ro div{display:grid;grid-template-columns:110px 1fr;gap:10px}
+.ro b{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding-top:3px}
+.ro span{white-space:pre-wrap;word-break:break-word}
+.miss{font-size:.85rem;color:var(--bad);font-weight:600}
+.okk{font-size:.85rem;color:var(--ok);font-weight:600}
+.verdict{border-radius:16px;padding:18px 20px;color:#fff;background:var(--v);display:grid;gap:4px}
+.verdict small{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem;opacity:.9}
+.verdict b{font-size:1.35rem;line-height:1.2}
+.kpis{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kpi b{display:block;font-size:1.6rem;line-height:1.1}.kpi span{color:var(--mute);font-size:.82rem}
+.box{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg)}
+.box header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 8px 6px 12px;border-bottom:1px solid var(--line);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.box header button{font:inherit;font-size:.8rem;font-weight:700;text-transform:none;letter-spacing:0;padding:5px 11px;border-radius:99px;border:0;background:var(--navy);color:#fff;cursor:pointer}
+.box pre{margin:0;padding:12px;font:inherit;font-size:.92rem;white-space:pre-wrap;word-break:break-word;max-height:300px;overflow:auto}
+footer{margin:40px 0 32px;text-align:center;color:var(--mute);font-size:.86rem}
+footer a{color:inherit;font-weight:600}
+@media(max-width:560px){.test{grid-template-columns:1fr}.ro div{grid-template-columns:1fr;gap:0}.card{padding:14px}.ih{grid-template-columns:auto 1fr}.ih .tags{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="top">
+    <div>
+      <span class="eyebrow">Site QA handoff</span>
+      <h1>Test the delivery. Report it once.</h1>
+      <p>A guided test plan for every page, and issue reports a developer can fix without asking you twice. No ticketing tool needed.</p>
+    </div>
+    <div class="side">
+      <div class="row" role="group" aria-label="Your role"><button type="button" class="hbtn" id="rTest">I am testing</button><button type="button" class="hbtn" id="rFix">I am fixing</button></div>
+      <div class="row"><button type="button" class="hbtn" id="saveF">Save to a file</button><button type="button" class="hbtn" id="openF">Open a file</button><input type="file" id="file" accept=".json,application/json" hidden></div>
+      <small id="saved">Saved in this browser as you work</small>
+    </div>
+  </div>
+  <nav class="tabs" id="nav" aria-label="Sections"></nav>
+</div></header>
+
+<main class="wrap" id="main"></main>
+
+<footer><div class="wrap">Everything you type stays in your browser. Built by <a href="https://wahiba-rechid.vercel.app/">Wahiba Rechid</a></div></footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const h=(tag,props,...kids)=>{const e=document.createElement(tag);for(const k in props||{}){const v=props[k];if(k.startsWith("aria-")&&v!=null){e.setAttribute(k,String(v));continue}if(v==null||v===false)continue;if(k==="class")e.className=v;else if(k==="text")e.textContent=v;else if(k.startsWith("on"))e.addEventListener(k.slice(2),v);else e.setAttribute(k,v===true?"":v)}kids.flat(3).forEach(c=>c!=null&&c!==false&&e.appendChild(typeof c==="string"?document.createTextNode(c):c));return e};
+const store={get(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const stamp=()=>new Date().toISOString().slice(0,10);
+const slug=t=>String(t).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40);
+
+// ---------- test plan ----------
+const CATS=[
+ ["content","Content and spelling",[["c1","The text matches the approved content"],["c2","No spelling or grammar mistakes"],["c3","No placeholder text or test content left"],["c4","Names, prices, dates and numbers are correct"]]],
+ ["design","Design and layout",[["d1","Spacing and alignment match the mockup"],["d2","Fonts, sizes and colours match the mockup"],["d3","Images are sharp, not stretched, and the right ones"],["d4","No text is cut off or overlapping"]]],
+ ["mobile","Mobile and responsive",[["m1","Readable on a phone without zooming or scrolling sideways"],["m2","The menu opens and works on a phone"],["m3","Buttons and links are easy to tap"],["m4","The layout holds on a tablet and on a small laptop"]]],
+ ["links","Links and buttons",[["l1","Every button leads to the right place"],["l2","No link leads to an error page"],["l3","External links open the right site"]]],
+ ["forms","Forms",[["f1","Required fields and error messages work"],["f2","The form can be sent and a confirmation appears"],["f3","The message or lead arrives where it should"]]],
+ ["seo","SEO",[["s1","The page title is the one specified"],["s2","The meta description is the one specified"],["s3","One main heading (H1) and a logical heading order"],["s4","Images have a description (alt text)"],["s5","The address of the page is the one specified"]]],
+ ["tech","Errors and speed",[["t1","The page loads quickly"],["t2","No error message, blank area or broken element"],["t3","It works in a second browser"]]]
+];
+const SITE=["site","Whole site",[["g1","An address that does not exist shows a helpful 404 page"],["g2","The sitemap lists the right pages"],["g3","The live site is not hidden from search engines (no noindex)"],["g4","The site icon and site name appear in the browser tab"],["g5","http and non-www addresses redirect to the main one"],["g6","Header, footer and menu links all work"],["g7","The cookie banner appears and choices are respected"],["g8","Visits and key actions are recorded in the analytics tool"]]];
+const CATN=Object.fromEntries([...CATS,SITE].map(c=>[c[0],c[1]]));CATN.other="Other";
+const SEV={block:"Blocking",major:"Major",minor:"Minor",idea:"Suggestion"};
+const SEVH={block:"prevents going live",major:"visible to every visitor",minor:"small defect",idea:"improvement, not a defect"};
+const STA={open:"Open",fixed:"Fixed, to retest",verified:"Verified",reopened:"Reopened",wontfix:"Will not fix"};
+const DEV=["Desktop, Chrome","Desktop, Safari","Desktop, Firefox","Desktop, Edge","iPhone, Safari","Android phone, Chrome","Tablet"];
+
+// ---------- state ----------
+const EXAMPLE=()=>({example:true,role:"test",proj:{name:"Atelier Nour",url:"staging.ateliernour.com",round:"Delivery 1",tester:"",contact:""},devices:["Desktop, Chrome","iPhone, Safari"],
+ pages:[{id:1,name:"Home",path:"/"},{id:2,name:"Workshops",path:"/workshops"},{id:3,name:"Contact",path:"/contact"}],
+ tests:{"1:c1":"pass","1:c2":"fail","1:c3":"pass","1:d1":"pass","1:m1":"fail","1:l1":"pass","3:f2":"fail","1:s1":"pass","site:g1":"pass"},
+ issues:[
+  {id:1,title:"Typo in the main heading",page:"1",section:"Hero, main heading",cat:"content",sev:"minor",device:"Desktop, Chrome",steps:"Open the home page.",expected:"\"Handmade ceramic workshops\"",actual:"The heading reads \"Handmade cermaic workshops\".",status:"fixed",dev:"Corrected in the content file.",created:"2026-11-18",rounds:"0",test:"1:c2"},
+  {id:2,title:"Text overflows the screen on a phone",page:"1",section:"Pricing table",cat:"mobile",sev:"major",device:"iPhone, Safari",steps:"1. Open the home page on a phone.\n2. Scroll to the pricing table.",expected:"The table fits the width of the screen.",actual:"The third column is cut off and the page scrolls sideways.",status:"open",dev:"",created:"2026-11-18",rounds:"0",test:"1:m1"},
+  {id:3,title:"Contact form shows no confirmation",page:"3",section:"Contact form",cat:"forms",sev:"block",device:"Desktop, Chrome",steps:"1. Fill in every field.\n2. Click Send.",expected:"A confirmation message, and the email arrives in the shared inbox.",actual:"Nothing happens after the click. No email received.",status:"open",dev:"",created:"2026-11-19",rounds:"0",test:"3:f2"}]});
+const BLANK=()=>({role:"test",proj:{name:"",url:"",round:"Delivery 1",tester:"",contact:""},devices:["Desktop, Chrome","iPhone, Safari"],pages:[{id:1,name:"Home",path:"/"}],tests:{},issues:[]});
+const strs=o=>Object.fromEntries(Object.entries(o&&typeof o==="object"?o:{}).filter(([k,v])=>typeof v==="string"));
+function normalize(o){const b=BLANK();o=o&&typeof o==="object"?o:{};
+  const pages=(Array.isArray(o.pages)?o.pages:[]).filter(p=>p&&typeof p==="object").slice(0,200).map((p,i)=>({id:Number(p.id)>0?Number(p.id):i+1,name:String(p.name||""),path:String(p.path||"")}));
+  const tests=Object.fromEntries(Object.entries(o.tests&&typeof o.tests==="object"?o.tests:{}).filter(([k,v])=>["pass","fail","na"].includes(v)));
+  const issues=(Array.isArray(o.issues)?o.issues:[]).filter(i=>i&&typeof i==="object").slice(0,2000).map((i,n)=>({...strs(i),id:Number(i.id)>0?Number(i.id):n+1,sev:SEV[i.sev]?i.sev:"minor",status:STA[i.status]?i.status:"open",cat:CATN[i.cat]?i.cat:"other",page:String(i.page||"site")}));
+  return{example:o.example===true,role:o.role==="fix"?"fix":"test",proj:{...b.proj,...strs(o.proj)},devices:(Array.isArray(o.devices)?o.devices:b.devices).filter(d=>typeof d==="string").slice(0,20),pages:pages.length?pages:b.pages,tests,issues}}
+let S=normalize(store.get("qa-state",null)||EXAMPLE());
+let sec="plan",cur=S.pages[0].id,flt="todo",live=[];
+const open=new Set();
+const save=()=>store.set("qa-state",S);
+const dirty=()=>{S.example=false;save()};
+
+// ---------- data helpers ----------
+const N=()=>(S.proj.name||"").trim()||"the site";
+const U=()=>{let u=((S.proj.url||"").trim()||"staging.yoursite.com").replace(/\s+/g,"").replace(/\/+$/,"");if(!/^https?:\/\//i.test(u))u="https://"+u;return u};
+const pg=id=>S.pages.find(p=>String(p.id)===String(id));
+const pName=id=>id==="site"?"Whole site":(pg(id)?pg(id).name||"(unnamed)":"(removed page)");
+const pUrl=id=>{const p=pg(id);if(!p)return U();const s=(p.path||"").trim();return /^https?:/.test(s)?s:U()+(s?(s.startsWith("/")?s:"/"+s):"")};
+const allTests=()=>[...S.pages.flatMap(p=>CATS.flatMap(c=>c[2].map(t=>({key:p.id+":"+t[0],page:String(p.id),cat:c[0],label:t[1]})))),...SITE[2].map(t=>({key:"site:"+t[0],page:"site",cat:"site",label:t[1]}))];
+const cov=list=>{const d=list.filter(t=>S.tests[t.key]).length;return list.length?Math.round(100*d/list.length):0};
+const unresolved=i=>["open","reopened","fixed"].includes(i.status);
+const missing=i=>[[i.title,"a title"],[i.section,"the section of the page"],[i.expected,"what you expected"],[i.actual,"what happens"]].filter(x=>!(x[0]||"").trim()).map(x=>x[1]);
+const sevRank={block:0,major:1,minor:2,idea:3};
+const sorted=l=>[...l].sort((a,b)=>sevRank[a.sev]-sevRank[b.sev]||a.id-b.id);
+function verdict(){const u=S.issues.filter(unresolved),b=u.filter(i=>i.sev==="block").length,m=u.filter(i=>i.sev==="major").length,c=cov(allTests()),rt=u.filter(i=>i.status==="fixed").length;
+  if(b)return["var(--bad)","Not ready to go live",b+" blocking "+(b===1?"issue":"issues")+" still open."];
+  if(c<80)return["var(--warn)","Not enough tested yet","Only "+c+"% of the test plan has a result. Aim for at least 80%."];
+  if(m)return["var(--warn)","Ready with reservations",m+" major "+(m===1?"issue":"issues")+" still open. Decide together whether they can wait."];
+  if(rt)return["var(--warn)","Almost there",rt+" "+(rt===1?"fix":"fixes")+" still to retest."];
+  return["var(--ok)","Ready to go live","No blocking or major issue open, and "+c+"% of the plan tested."]}
+function issueText(i){return "#"+i.id+" ["+SEV[i.sev]+"] "+pName(i.page)+((i.section||"").trim()?" > "+i.section.trim():"")+": "+((i.title||"").trim()||"(no title)")+"\nAddress: "+pUrl(i.page)+"\nCategory: "+CATN[i.cat]+((i.device||"").trim()?"\nDevice: "+i.device:"")+((i.steps||"").trim()?"\nSteps:\n"+i.steps.trim():"")+"\nExpected: "+((i.expected||"").trim()||"(to complete)")+"\nActual: "+((i.actual||"").trim()||"(to complete)")+"\nStatus: "+STA[i.status]+((i.dev||"").trim()?"\nDeveloper note: "+i.dev.trim():"")}
+function message(){const u=sorted(S.issues.filter(unresolved)),v=verdict(),rt=u.filter(i=>i.status==="fixed");
+  if(S.role==="fix")return "Hello,\n\n"+S.proj.round+" of "+N()+": "+rt.length+" "+(rt.length===1?"issue is":"issues are")+" fixed and ready for you to retest"+(S.issues.some(i=>i.status==="wontfix")?", and "+S.issues.filter(i=>i.status==="wontfix").length+" will not be fixed (reason in the note)":"")+".\n\n"+rt.map(i=>"- #"+i.id+" "+i.title+((i.dev||"").trim()?" ("+i.dev.trim()+")":"")).join("\n")+"\n\nThe file is attached: open it in the tool to retest and mark each one Verified or Reopened.\n"+location.origin+location.pathname+"\n\nThank you";
+  return "Hello,\n\nHere is the test report for "+N()+" ("+U()+"), "+S.proj.round+".\n\nVerdict: "+v[1]+". "+v[2]+"\n"+cov(allTests())+"% of the test plan covered on "+S.pages.length+" pages, tested on "+S.devices.join(" and ")+".\n\n"+u.length+" "+(u.length===1?"issue":"issues")+" to handle, most serious first:\n"+u.slice(0,12).map(i=>"- #"+i.id+" ["+SEV[i.sev]+"] "+pName(i.page)+": "+i.title).join("\n")+(u.length>12?"\n- and "+(u.length-12)+" more in the file":"")+"\n\nEach issue has the page address, the section, the steps, what was expected and what happens. The Excel file and the review file are attached: you can open the review file in the tool, mark each issue Fixed with a note, and send it back for retest.\n"+location.origin+location.pathname+"\n\nThank you"}
+
+// ---------- UI blocks ----------
+function fld(obj,key,label,o){o=o||{};let el;
+  if(o.options){el=h("select",null,o.options.map(v=>h("option",{value:v[0],text:v[1]})));el.value=obj[key]==null||obj[key]===""?o.options[0][0]:obj[key]}
+  else{el=h(o.rows?"textarea":"input",{placeholder:o.ph,maxlength:o.max||3000});if(o.rows)el.rows=o.rows;else el.type="text";el.value=obj[key]||""}
+  el.setAttribute("aria-label",label);
+  el.addEventListener(o.options?"change":"input",()=>{obj[key]=el.value;dirty();if(o.then)o.then(el.value);o.re?render():refresh()});
+  return o.bare?el:h("label",{class:"fld"},h("span",{class:"lab",text:label}),el)}
+function box(fn,label){const pre=h("pre");live.push(()=>{const t=fn();if(pre.textContent!==t)pre.textContent=t});
+  const b=h("button",{type:"button",text:"Copy",onclick:()=>{(navigator.clipboard?navigator.clipboard.writeText(fn()):Promise.reject()).then(()=>b.textContent="Copied",()=>b.textContent="Select and copy");setTimeout(()=>b.textContent="Copy",1600)}});
+  return h("div",{class:"box"},h("header",null,label,b),pre)}
+const card=(title,...kids)=>h("div",{class:"card"},title?h("h3",null,title):null,kids);
+const why=t=>h("p",{class:"why",text:t});
+const go=(k,f)=>{sec=k;if(f)f();render();window.scrollTo({top:0})};
+
+function newIssue(seed){const id=Math.max(0,...S.issues.map(i=>i.id))+1;const i={id,title:"",page:String(cur),section:"",cat:"other",sev:"minor",device:S.devices[0]||"",steps:"",expected:"",actual:"",status:"open",dev:"",created:stamp(),rounds:"0",...seed};S.issues.push(i);open.add(id);dirty();return i}
+function setTest(t,val){const was=S.tests[t.key];if(was===val)delete S.tests[t.key];else S.tests[t.key]=val;
+  if(S.tests[t.key]==="fail"&&!S.issues.some(i=>i.test===t.key))newIssue({page:t.page,cat:t.cat,test:t.key,title:"",expected:t.label+"."});
+  dirty();render()}
+
+// ---------- views ----------
+const VIEW={
+ setup:()=>[h("h2",{text:"The site to test"}),h("p",{class:"lead",text:"Name the delivery, list the pages and choose the devices. The test plan is built from this."}),
+   S.example?h("div",{class:"note"},h("div",{class:"row"},h("span",{text:"This is a worked example. Explore it, then start your own review."}),h("button",{type:"button",class:"btn gold sp",text:"Start my review",onclick:()=>{S=BLANK();cur=1;save();render()}}))):null,
+   card("The delivery",h("div",{class:"g2"},fld(S.proj,"name","Site or project name",{ph:"Atelier Nour",max:60}),fld(S.proj,"url","Address to test (staging or live)",{ph:"staging.yoursite.com",max:140}),fld(S.proj,"round","Delivery or version",{ph:"Delivery 1",max:40}),fld(S.proj,"tester","Tested by",{ph:"Your name",max:60}),fld(S.proj,"contact","Developer or agency",{ph:"Name of your tech contact",max:60}))),
+   card("Devices you will test on",why("Two is a good minimum: one computer and one phone."),h("div",{class:"chk"},DEV.map(d=>{const c=h("input",{type:"checkbox"});c.checked=S.devices.includes(d);c.addEventListener("change",()=>{S.devices=DEV.filter(x=>x===d?c.checked:S.devices.includes(x));dirty()});return h("label",null,c,d)}))),
+   card("The pages",h("div",{class:"tw"},h("table",{class:"t"},h("thead",null,h("tr",null,h("th",{text:"Page"}),h("th",{text:"Address after the site name"}),h("th"))),h("tbody",null,S.pages.map((p,i)=>h("tr",null,h("td",null,fld(p,"name","Page name",{bare:1,ph:"Services",max:80})),h("td",null,fld(p,"path","Path",{bare:1,ph:"/services",max:160})),h("td",null,S.pages.length>1?h("button",{type:"button",class:"btn x","aria-label":"Remove "+p.name,text:"✕",onclick:()=>{S.pages.splice(i,1);if(cur===p.id)cur=S.pages[0].id;dirty();render()}}):null)))))),
+     h("div",{class:"row"},h("button",{type:"button",class:"btn main",text:"+ Add a page",onclick:()=>{const id=Math.max(0,...S.pages.map(p=>p.id))+1;S.pages.push({id,name:"",path:""});dirty();render();const ins=document.querySelectorAll("#main table input");ins[ins.length-2].focus()}}),h("span",{class:"why",text:allTests().length+" tests in the plan for "+S.pages.length+(S.pages.length===1?" page.":" pages.")}))),
+   h("div",{class:"row"},h("button",{type:"button",class:"btn main sp",text:"Next: Test plan",onclick:()=>go("plan")}))],
+
+ plan:()=>{const isSite=cur==="site",cats=isSite?[SITE]:CATS,p=isSite?null:(pg(cur)||S.pages[0]);if(!isSite)cur=p.id;const pid=isSite?"site":String(p.id);
+   const pageTests=id=>allTests().filter(t=>t.page===String(id));
+   return [h("h2",{text:"Test plan"}),h("p",{class:"lead",text:"Go through one page at a time. Mark each check Pass, Fail or Not applicable. A Fail opens an issue for you to complete."}),
+   h("div",{class:"chips",role:"group","aria-label":"Pages"},S.pages.map(q=>h("button",{type:"button",class:"chip","aria-pressed":!isSite&&q.id===p.id,onclick:()=>{cur=q.id;render()}},q.name||"(unnamed)",h("small",{text:cov(pageTests(q.id))+"%"}))),h("button",{type:"button",class:"chip","aria-pressed":isSite,onclick:()=>{cur="site";render()}},"Whole site",h("small",{text:cov(pageTests("site"))+"%"}))),
+   h("div",{style:"height:12px"}),
+   card([isSite?"Whole site":(p.name||"(unnamed)"),isSite?null:h("a",{href:pUrl(pid),target:"_blank",rel:"noopener",class:"why",text:pUrl(pid).replace(/^https?:\/\//,"")})],
+     cats.map(c=>{const ts=c[2].map(t=>({key:pid+":"+t[0],page:pid,cat:c[0],label:t[1]})),d=ts.filter(t=>S.tests[t.key]).length;
+       return h("div",{class:"cat"},h("h4",null,c[1],h("small",{text:d+" / "+ts.length})),ts.map(t=>{const v=S.tests[t.key],iss=S.issues.find(i=>i.test===t.key);
+         return h("div",{class:"test"},h("span",null,t.label,v==="fail"&&iss?h("button",{type:"button",class:"lk",text:(missing(iss).length?"Complete issue #":"Issue #")+iss.id,onclick:()=>go("issues",()=>{flt="all";open.clear();open.add(iss.id)})}):null),
+           h("div",{class:"res",role:"group","aria-label":t.label},[["pass","Pass"],["fail","Fail"],["na","N/A"]].map(([k,l])=>h("button",{type:"button",class:k,"aria-pressed":v===k,text:l,onclick:()=>setTest(t,k)}))))}))})),
+   h("div",{class:"row"},h("button",{type:"button",class:"btn",text:"+ Report something not in the plan",onclick:()=>{newIssue({page:pid});go("issues",()=>{flt="all"})}}),h("button",{type:"button",class:"btn main sp",text:"Next: Issues",onclick:()=>go("issues")}))]},
+
+ issues:()=>{const fix=S.role==="fix",F={todo:["To handle",i=>fix?["open","reopened"].includes(i.status):unresolved(i)],retest:["To retest",i=>i.status==="fixed"],closed:["Closed",i=>!unresolved(i)],all:["All",()=>true]};
+   const list=sorted(S.issues.filter(F[flt][1]));
+   return [h("h2",{text:fix?"Issues to fix":"Issues"}),h("p",{class:"lead",text:fix?"Most serious first. Mark an issue Fixed and leave a short note, then send the file back for retest.":"One issue per problem. A complete issue says where, how to see it, what you expected and what happens: the developer should never need to ask."}),
+   h("div",{class:"row",style:"margin-bottom:12px"},h("div",{class:"chips"},Object.entries(F).map(([k,[n,f]])=>h("button",{type:"button",class:"chip","aria-pressed":flt===k,onclick:()=>{flt=k;render()}},n,h("small",{text:String(S.issues.filter(f).length)})))),fix?null:h("button",{type:"button",class:"btn main sp",text:"+ New issue",onclick:()=>{newIssue({});flt="all";render()}})),
+   list.length?null:h("div",{class:"card"},why(S.issues.length?"Nothing in this view.":"No issue yet. Mark a check as Fail in the test plan, or add one here.")),
+   list.map(i=>{const isOpen=open.has(i.id),miss=missing(i);
+     const head=h("button",{type:"button",class:"ih","aria-expanded":isOpen,onclick:()=>{isOpen?open.delete(i.id):open.add(i.id);render()}},h("span",{class:"id",text:"#"+i.id}),h("span",null,h("b",{text:(i.title||"").trim()||"(untitled issue)"}),h("small",{text:pName(i.page)+((i.section||"").trim()?" > "+i.section.trim():"")+" · "+CATN[i.cat]})),h("span",{class:"row tags"},h("em",{class:"tag t-"+i.sev,text:SEV[i.sev]}),h("em",{class:"tag t-"+i.status,text:STA[i.status]})));
+     let body=null;
+     if(isOpen){const ro=()=>h("div",{class:"ro"},[["Address",pUrl(i.page)],["Section",i.section],["Device",i.device],["Steps",i.steps],["Expected",i.expected],["Actual",i.actual]].filter(r=>(r[1]||"").trim()).map(([a,b])=>h("div",null,h("b",{text:a}),h("span",{text:b}))));
+       const statusOpts=fix?[["open","Open"],["fixed","Fixed, to retest"],["wontfix","Will not fix"]]:Object.entries(STA);
+       if(fix&&!statusOpts.some(o=>o[0]===i.status))statusOpts.unshift([i.status,STA[i.status]]);
+       const stSel=fld(i,"status","Status",{options:statusOpts,re:1,then:v=>{if(v==="reopened")i.rounds=String((Number(i.rounds)||0)+1)}});
+       body=h("div",{class:"ib"},fix?[ro(),h("div",{class:"g2"},stSel,fld(i,"dev","Developer note",{rows:2,max:600,ph:"What was changed, or why it will not be fixed"}))]
+        :[h("div",{class:"g2"},fld(i,"title","Title: the problem in a few words",{ph:"Contact form shows no confirmation",max:140}),fld(i,"page","Page",{options:[...S.pages.map(p=>[String(p.id),p.name||"(unnamed)"]),["site","Whole site"]],re:1})),
+          h("div",{class:"g2"},fld(i,"section","Section of the page",{ph:"Hero, pricing table, footer...",max:120}),fld(i,"cat","Category",{options:Object.entries(CATN),re:1}),fld(i,"sev","Severity",{options:Object.entries(SEV).map(([k,v])=>[k,v+": "+SEVH[k]]),re:1}),fld(i,"device","Seen on",{options:[...S.devices.map(d=>[d,d]),["All devices","All devices"]]})),
+          fld(i,"steps","Steps to see it",{rows:2,max:900,ph:"1. Open the page on a phone.\n2. Scroll to the pricing table."}),
+          h("div",{class:"g2"},fld(i,"expected","What you expected",{rows:2,max:600,ph:"The table fits the width of the screen."}),fld(i,"actual","What happens",{rows:2,max:600,ph:"The third column is cut off."})),
+          (()=>{const m=h("p");live.push(()=>{const x=missing(i);m.className=x.length?"miss":"okk";m.textContent=x.length?"Still missing: "+x.join(", ")+".":"This issue is complete: a developer can act on it."});return m})(),
+          h("div",{class:"g2"},stSel,(i.dev||"").trim()?h("div",{class:"fld"},h("span",{class:"lab",text:"Developer note"}),h("span",{text:i.dev})):null),
+          h("div",{class:"row"},h("button",{type:"button",class:"btn",text:"Copy this issue as text",onclick:e=>{(navigator.clipboard?navigator.clipboard.writeText(issueText(i)):Promise.reject()).then(()=>e.target.textContent="Copied",()=>e.target.textContent="Copy failed");setTimeout(()=>e.target.textContent="Copy this issue as text",1600)}}),h("button",{type:"button",class:"btn x sp",text:"Delete",onclick:()=>{if(confirm("Delete issue #"+i.id+"?")){S.issues=S.issues.filter(x=>x!==i);dirty();render()}}}))])}
+     return h("div",{class:"iss"},head,body)}),
+   h("div",{class:"row"},h("button",{type:"button",class:"btn main sp",text:"Next: Hand over",onclick:()=>go("hand")}))]},
+
+ hand:()=>{const v=verdict(),u=S.issues.filter(unresolved),fix=S.role==="fix",k=(n,l)=>h("div",{class:"kpi"},h("b",{text:String(n)}),h("span",{text:l}));
+   const byCat=Object.keys(CATN).map(c=>[CATN[c],u.filter(i=>i.cat===c).length]).filter(x=>x[1]);
+   return [h("h2",{text:fix?"Send back for retest":"Hand over the report"}),h("p",{class:"lead",text:fix?"Send the file back so that each fix can be retested and closed.":"A verdict, the list of issues by severity, and one file the developer can open, answer and send back."}),
+   h("div",{class:"verdict",style:"--v:"+v[0]},h("small",{text:S.proj.round+" · "+N()}),h("b",{text:v[1]}),h("span",{text:v[2]})),
+   h("div",{style:"height:12px"}),
+   h("div",{class:"kpis"},k(cov(allTests())+"%","of the plan tested"),k(u.filter(i=>i.sev==="block").length,"blocking open"),k(u.filter(i=>i.sev==="major").length,"major open"),k(u.filter(i=>i.status==="fixed").length,"to retest"),k(S.issues.filter(i=>i.status==="verified").length,"verified")),
+   h("div",{style:"height:14px"}),
+   byCat.length?card("Open issues by category",h("div",{class:"chips"},byCat.map(([n,c])=>h("span",{class:"chip",style:"cursor:default"},n,h("small",{text:String(c)}))))):null,
+   card("Send it",h("div",{class:"row"},h("button",{type:"button",class:"btn gold",text:"Download the Excel report",onclick:()=>download(xlsx(),"qa-report-"+(slug(N())||"site")+"-"+stamp()+".xlsx")}),h("button",{type:"button",class:"btn main",text:"Save the review file",onclick:saveFile}),h("button",{type:"button",class:"btn",text:"Open an email",onclick:()=>{location.href="mailto:?subject="+encodeURIComponent("Test report: "+N()+", "+S.proj.round)+"&body="+encodeURIComponent(message())}})),box(message,fix?"Message to the tester":"Message to the developer"),why("Attach the files to the email yourself: a web page cannot attach files for you. The review file is the one that keeps the conversation going: the other person opens it here, updates the statuses and sends it back.")),
+   card("How the loop works",h("div",{class:"g2"},...[["1. You test","Go through the plan and complete each issue."],["2. They fix","The developer opens the file, chooses \"I am fixing\", marks issues Fixed with a note."],["3. You retest","Open the file they return. Mark each fix Verified or Reopened."],["4. You decide","The verdict turns green when nothing blocking or major is left."]].map(([a,b])=>h("div",null,h("b",{text:a}),h("br"),h("span",{class:"why",text:b})))))]}
+};
+
+// ---------- files ----------
+function download(blob,name){const a=h("a",{href:URL.createObjectURL(blob),download:name});document.body.appendChild(a);a.click();a.remove()}
+function saveFile(){download(new Blob([JSON.stringify({app:"qa-handoff",version:1,saved:stamp(),state:S},null,1)],{type:"application/json"}),"qa-review-"+(slug(N())||"site")+"-"+stamp()+".json");$("saved").textContent="Review file saved on "+stamp()}
+function openFile(file){const r=new FileReader();r.onload=()=>{let o;try{o=JSON.parse(r.result)}catch(e){o=null}
+  if(!o||o.app!=="qa-handoff"||!o.state||!Array.isArray(o.state.pages)){$("saved").textContent="This file is not a QA review.";return}
+  if(!S.example&&!confirm("Replace the review currently on screen with the one from this file?"))return;
+  const role=S.role;S=normalize(o.state);S.example=false;S.role=role;cur=S.pages[0].id;sec="issues";flt="todo";open.clear();save();render();$("saved").textContent="Review opened: "+N()+(o.saved?" (saved on "+String(o.saved).slice(0,10)+")":"")};r.readAsText(file)}
+const X=t=>String(t==null?"":t).replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c])).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"");
+function zip(files){const T=new Uint32Array(256).map((_,n)=>{for(let k=0;k<8;k++)n=n&1?0xEDB88320^(n>>>1):n>>>1;return n>>>0}),crc=b=>{let c=-1;for(let i=0;i<b.length;i++)c=T[(c^b[i])&255]^(c>>>8);return(c^-1)>>>0};
+  const enc=new TextEncoder(),parts=[],cen=[];let off=0;const u16=n=>[n&255,n>>>8&255],u32=n=>[n&255,n>>>8&255,n>>>16&255,n>>>24&255];
+  files.forEach(([name,body])=>{const nb=enc.encode(name),db=enc.encode(body),c=crc(db),head=[...u16(20),...u16(0x800),...u16(0),...u16(0),...u16(0x21),...u32(c),...u32(db.length),...u32(db.length),...u16(nb.length),...u16(0)];
+    parts.push(new Uint8Array([0x50,0x4b,3,4,...head]),nb,db);cen.push(new Uint8Array([0x50,0x4b,1,2,...u16(20),...head,...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]),nb);off+=30+nb.length+db.length});
+  const cl=cen.reduce((a,b)=>a+b.length,0);return new Blob([...parts,...cen,new Uint8Array([0x50,0x4b,5,6,0,0,0,0,...u16(files.length),...u16(files.length),...u32(cl),...u32(off),0,0])],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"})}
+function sheets(){const v=verdict(),u=S.issues.filter(unresolved),R={pass:"Pass",fail:"Fail",na:"Not applicable"};
+  return [["Summary",[30,80],[["Field","Value"],["Site",N()],["Address tested",U()],["Delivery",S.proj.round],["Tested by",S.proj.tester||""],["Developer or agency",S.proj.contact||""],["Date",stamp()],["Devices",S.devices.join(", ")],["Verdict",v[1]+". "+v[2]],["Plan tested",cov(allTests())+"%"],["Blocking issues open",String(u.filter(i=>i.sev==="block").length)],["Major issues open",String(u.filter(i=>i.sev==="major").length)],["Fixes to retest",String(u.filter(i=>i.status==="fixed").length)],["Issues verified",String(S.issues.filter(i=>i.status==="verified").length)]]],
+   ["Issues",[6,18,12,20,18,40,24,20,40,44,40,40,36,12,9],[["ID","Status","Severity","Category","Page","Address","Section","Device","Title","Steps","Expected","Actual","Developer note","Reported","Reopened"],...sorted(S.issues).map(i=>["#"+i.id,STA[i.status],SEV[i.sev],CATN[i.cat],pName(i.page),pUrl(i.page),i.section||"",i.device||"",i.title||"",i.steps||"",i.expected||"",i.actual||"",i.dev||"",i.created||"",i.rounds||"0"])]],
+   ["Test plan",[22,24,60,16],[["Page","Category","Check","Result"],...allTests().map(t=>[pName(t.page),CATN[t.cat],t.label,R[S.tests[t.key]]||"Not tested"])]]]}
+function xlsx(){const sh=sheets(),col=n=>{let s="";n++;while(n){s=String.fromCharCode(65+(n-1)%26)+s;n=Math.floor((n-1)/26)}return s},R='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  const sheetXml=([name,w,rows])=>R+'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0" showGridLines="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><sheetFormatPr defaultRowHeight="15"/><cols>'+w.map((x,i)=>'<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+x+'" customWidth="1"/>').join("")+"</cols><sheetData>"+rows.map((r,ri)=>'<row r="'+(ri+1)+'">'+r.map((c,ci)=>'<c r="'+col(ci)+(ri+1)+'" t="inlineStr" s="'+(ri===0?1:ci===0?3:2)+'"><is><t xml:space="preserve">'+X(String(c).slice(0,32000))+"</t></is></c>").join("")+"</row>").join("")+"</sheetData>"+(rows.length>1?'<autoFilter ref="A1:'+col(w.length-1)+rows.length+'"/>':"")+"</worksheet>";
+  const styles=R+'<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="3"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF14233F"/></patternFill></fill></fills><borders count="2"><border/><border><bottom style="thin"><color rgb="FFE9E2D3"/></bottom></border></borders><cellStyleXfs count="1"><xf/></cellStyleXfs><cellXfs count="4"><xf/><xf fontId="1" fillId="2" applyFont="1" applyFill="1" applyAlignment="1"><alignment vertical="center"/></xf><xf borderId="1" applyBorder="1" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf><xf fontId="2" borderId="1" applyFont="1" applyBorder="1" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf></cellXfs></styleSheet>';
+  return zip([["[Content_Types].xml",R+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'+sh.map((_,i)=>'<Override PartName="/xl/worksheets/sheet'+(i+1)+'.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>').join("")+'<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'],
+   ["_rels/.rels",R+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'],
+   ["xl/workbook.xml",R+'<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'+sh.map((s,i)=>'<sheet name="'+X(s[0])+'" sheetId="'+(i+1)+'" r:id="rId'+(i+1)+'"/>').join("")+"</sheets></workbook>"],
+   ["xl/_rels/workbook.xml.rels",R+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+sh.map((_,i)=>'<Relationship Id="rId'+(i+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet'+(i+1)+'.xml"/>').join("")+'<Relationship Id="rId'+(sh.length+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'],
+   ["xl/styles.xml",styles],...sh.map((s,i)=>["xl/worksheets/sheet"+(i+1)+".xml",sheetXml(s)])])}
+
+// ---------- render ----------
+const NAV=[["setup","Site and pages",()=>S.pages.length],["plan","Test plan",()=>cov(allTests())+"%"],["issues","Issues",()=>S.issues.filter(unresolved).length],["hand","Hand over",()=>null]];
+function render(){live=[];
+  const nav=$("nav");nav.innerHTML="";NAV.forEach(([k,n,c])=>{const v=c();nav.appendChild(h("button",{type:"button",class:"tabb","aria-current":k===sec,onclick:()=>{sec=k;render()}},n,v==null?null:h("small",{text:String(v)})))});
+  $("rTest").setAttribute("aria-pressed",S.role==="test");$("rFix").setAttribute("aria-pressed",S.role==="fix");
+  const m=$("main");m.innerHTML="";m.append(...[].concat(VIEW[sec]()).flat(3).filter(Boolean));refresh()}
+function refresh(){live.forEach(f=>f())}
+$("rTest").addEventListener("click",()=>{S.role="test";save();render()});
+$("rFix").addEventListener("click",()=>{S.role="fix";save();sec="issues";flt="todo";render()});
+$("saveF").addEventListener("click",saveFile);
+$("openF").addEventListener("click",()=>$("file").click());
+$("file").addEventListener("change",e=>{if(e.target.files[0])openFile(e.target.files[0]);e.target.value=""});
+render();
+</script>
+</body>
+</html>
