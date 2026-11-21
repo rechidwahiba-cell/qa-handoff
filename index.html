@@ -201,9 +201,52 @@ footer{margin:30px 0 28px;text-align:center;color:var(--mute);font-size:.84rem}
 footer a{color:inherit;font-weight:600}
 @media(max-width:860px){.narrow{display:block}.plan{grid-template-columns:1fr}.pages{position:static;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}.cols{grid-template-columns:1fr}.g3{grid-template-columns:1fr}.side{justify-items:start}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* polish */
+:root{--bg:#EFE8D9}
+@media (prefers-color-scheme:dark){:root{--bg:#0B1322}}
+body{font-size:16px}
+.wrap{max-width:1280px}
+.card,.cat{box-shadow:0 1px 2px rgba(20,35,63,.06),0 14px 34px -16px rgba(20,35,63,.3)}
+h2{font-size:1.45rem;font-weight:800}
+.tr{padding:10px 8px}.tr span{font-size:1rem}
+.res button{padding:7px 15px;font-size:.8rem}
+.res .pass{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 50%,var(--line));background:color-mix(in srgb,var(--ok) 7%,var(--card))}
+.res .fail{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 50%,var(--line));background:color-mix(in srgb,var(--bad) 7%,var(--card))}
+.res .pass:hover{background:color-mix(in srgb,var(--ok) 20%,var(--card));border-color:var(--ok);color:var(--ok)}
+.res .fail:hover{background:color-mix(in srgb,var(--bad) 20%,var(--card));border-color:var(--bad);color:var(--bad)}
+.res .pass[aria-pressed=true],.res .pass[aria-pressed=true]:hover{background:var(--ok);border-color:var(--ok);color:#fff}
+.res .fail[aria-pressed=true],.res .fail[aria-pressed=true]:hover{background:var(--bad);border-color:var(--bad);color:#fff}
+.ch{grid-template-columns:auto 1fr auto auto auto;padding:13px 16px;background:linear-gradient(90deg,color-mix(in srgb,var(--k) 14%,var(--card)),var(--card) 55%)}
+.ch b{font-size:1.05rem}
+.cnt2{font-weight:800;font-size:.8rem;padding:3px 10px;border-radius:99px;background:color-mix(in srgb,var(--k) 16%,var(--card));color:var(--ink);white-space:nowrap}
+.gl.good{background:var(--ok)}.gl.bad{background:var(--bad)}
+.band{border-radius:18px;padding:18px 22px;margin-bottom:14px;color:#fff;background:linear-gradient(135deg,#14233F,#24406F);border-left:5px solid var(--gold);box-shadow:var(--shadow)}
+.band h2{margin:0;color:#fff}.band p{margin:4px 0 0;color:rgba(255,255,255,.78);max-width:780px}
+.empty{display:grid;gap:8px;justify-items:center;text-align:center;padding:34px 20px;margin-bottom:14px;border:2px dashed var(--line);border-radius:18px;background:var(--card)}
+.empty b{font-size:1.15rem}.empty span{color:var(--mute);max-width:540px}
+.menu{position:relative}.menu summary{list-style:none;cursor:pointer}.menu summary::-webkit-details-marker{display:none}
+.menu>div{position:absolute;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 34px rgba(0,0,0,.3);padding:6px;display:grid;gap:2px;z-index:30;min-width:180px}
+.menu>div button{border:0;background:none;color:var(--ink);text-align:left;padding:8px 10px;border-radius:8px;font-weight:600;font-size:.9rem}
+.menu>div button:hover{background:color-mix(in srgb,var(--gold) 20%,transparent)}
+.hbtn.pri{background:var(--gold-soft);color:#14233F;border-color:var(--gold-soft)}
+.hbtn.pri:hover{background:#fff}
+.hero{overflow:visible}.hero:before,.hero:after{display:none}
+.hero{background:radial-gradient(700px 380px at 92% -10%,rgba(201,164,92,.33),transparent 70%),radial-gradient(620px 360px at 0% 120%,rgba(43,92,158,.5),transparent 70%),var(--hero)}
+/* demo mode */
+#ribbon{display:none}
+body.demo #ribbon{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;position:sticky;top:0;z-index:66;padding:9px 16px;font-size:.92rem;font-weight:600;color:#14233F;background:repeating-linear-gradient(135deg,#E3CC9A,#E3CC9A 14px,#D9BD82 14px,#D9BD82 28px)}
+#ribbon b{background:#14233F;color:#fff;padding:2px 10px;border-radius:99px;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase}
+#ribbon button{border:1.5px solid #14233F;background:none;color:#14233F;font-weight:700;font-size:.82rem;padding:4px 12px;border-radius:99px}
+body.demo:after{content:"";position:fixed;inset:0;border:6px solid var(--gold);pointer-events:none;z-index:80}
+body.demo .hero{background:radial-gradient(700px 380px at 92% -10%,rgba(95,207,160,.3),transparent 70%),#0C3436}
+body.demo .side{visibility:hidden}
+body.demo .eyebrow:after{content:" \00b7  demo with a sample site"}
+body.demo .tabb[aria-current=true]{background:var(--bg)}
 </style>
 </head>
 <body>
+<div id="ribbon"><b>Demo</b><span>You are watching a sample review of a made-up site. Nothing here is saved, and your own review is untouched.</span><button type="button" id="ribX">Exit the demo</button></div>
 <header class="hero"><div class="wrap">
   <div class="top">
     <div>
@@ -213,7 +256,7 @@ footer a{color:inherit;font-weight:600}
     </div>
     <div class="side">
       <div class="role" role="group" aria-label="Your role"><button type="button" id="rTest">I am testing</button><button type="button" id="rFix">I am fixing</button></div>
-      <div class="row"><button type="button" class="hbtn" id="shareB">Share</button><button type="button" class="hbtn" id="demoB">▶ Watch the demo</button><button type="button" class="hbtn" id="saveF">Save to a file</button><button type="button" class="hbtn" id="openF">Open a file</button><input type="file" id="file" accept=".json,application/json" hidden></div>
+      <div class="row"><button type="button" class="hbtn" id="demoB">▶ Watch the demo</button><button type="button" class="hbtn pri" id="shareB">Share</button><details class="menu" id="fileMenu"><summary class="hbtn">File</summary><div><button type="button" id="saveF">Save the review to a file</button><button type="button" id="openF">Open a review file</button></div></details><input type="file" id="file" accept=".json,application/json" hidden></div>
       <small id="saved">Saved in this browser as you work</small>
     </div>
   </div>
@@ -349,6 +392,7 @@ function fld(obj,key,label,o){o=o||{};let el;
 function box(fn,label){const pre=h("pre");live.push(()=>{const t=fn();if(pre.textContent!==t)pre.textContent=t});return h("div",{class:"box"},h("header",null,label,h("button",{type:"button",text:"Copy",onclick:()=>copy(fn())})),pre)}
 const card=(title,...kids)=>h("div",{class:"card"},title?h("h3",null,title):null,kids);
 const why=t=>h("p",{class:"why",text:t});
+const band=(t,l)=>h("div",{class:"band"},h("h2",{text:t}),h("p",{text:l}));
 const go=(k,f)=>{sec=k;if(f)f();render();window.scrollTo({top:0})};
 function newIssue(seed){const id=Math.max(0,...S.issues.map(i=>i.id))+1;const i={id,type:"other",page:String(cur),url:"",section:"",cat:"other",sev:"minor",device:S.devices[0]||"",steps:"",actual:"",expected:"",status:"open",dev:"",created:stamp(),rounds:"0",...seed};S.issues.push(i);qrOpen.add(id);dirty();return i}
 function setTest(t,val){if(S.tests[t.key]===val)delete S.tests[t.key];else S.tests[t.key]=val;
@@ -375,14 +419,14 @@ const VIEW={
    return h("div",{class:"plan"},
     h("aside",{class:"pages","aria-label":"Pages"},S.pages.map(q=>pgBtn(q.id,q.name||"(unnamed)",(q.path||"/"))),pgBtn("site","Whole site","Checks done once"),h("button",{type:"button",class:"btn sm",style:"justify-self:start;margin-top:4px",text:"Edit pages and settings",onclick:()=>go("setup")})),
     h("div",null,
-     fresh()&&!demo.on?h("div",{class:"welcome"},h("div",null,h("b",{text:"New here? See the whole loop in one minute."}),h("span",{text:"The demo plays a real review step by step: testing, reporting, fixing, retesting."})),h("div",{class:"row"},h("button",{type:"button",class:"btn gold",text:"\u25B6 Watch the demo",onclick:startDemo}),h("button",{type:"button",class:"btn",style:"background:transparent;color:#fff;border-color:rgba(255,255,255,.4)",text:"Start with my site",onclick:()=>go("setup")}))):null,
-     h("div",{class:"phead"},h("h2",{text:isSite?"Whole site":(p.name||"(unnamed)")}),isSite?null:h("a",{href:pUrl(pid),target:"_blank",rel:"noopener",text:pUrl(pid).replace(/^https?:\/\//,"")+" ↗"}),
+     fresh()&&!demo.on?h("div",{class:"welcome"},h("div",null,h("b",{text:"New here? See the whole loop in one minute."}),h("span",{text:"The demo plays a sample review step by step: testing, reporting, fixing, retesting. It uses a made-up site and never touches your work."})),h("div",{class:"row"},h("button",{type:"button",class:"btn gold",text:"\u25B6 Watch the demo",onclick:startDemo}),h("button",{type:"button",class:"btn",style:"background:transparent;color:#fff;border-color:rgba(255,255,255,.4)",text:"Start with my site",onclick:()=>go("setup")}))):null,
+     h("div",{class:"phead"},h("h2",{text:isSite?"Whole site":(p.name||"(unnamed)")}),isSite?null:((S.proj.url||"").trim()?h("a",{href:pUrl(pid),target:"_blank",rel:"noopener",text:pUrl(pid).replace(/^https?:\/\//,"")+" \u2197"}):h("button",{type:"button",class:"btn sm",text:"Add the site address",onclick:()=>go("setup")})),
        h("span",{class:"why sp"},"Hover a check and press ",h("span",{class:"kbd",text:"P"})," ",h("span",{class:"kbd",text:"F"})," ",h("span",{class:"kbd",text:"N"})),
        h("span",{class:"dseg",role:"group","aria-label":"How deep to test this page"},[["ess","Essentials"],["full","Full plan"]].map(([k,l])=>h("button",{type:"button","aria-pressed":depthOf(pid)===k,text:l,title:k==="ess"?"The checks that matter most":"Every check, for the pages that matter most",onclick:()=>{if(isSite)S.proj.sdepth=k;else p.depth=k;dirty();render()}}))),
        h("button",{type:"button",class:"btn sm",text:"Pass everything left on this page",onclick:()=>{const left=pt.filter(t=>!S.tests[t.key]).length;if(!left)return;if(!confirm("Mark the "+left+" remaining checks on this page as Pass?\n\nOnly do this if you really looked at each one: a Pass tells the team it was checked."))return;let n=0;pt.forEach(t=>{if(!S.tests[t.key]){S.tests[t.key]="pass";n++}});dirty();render();toast(n+" checks marked Pass")}})),
      cats.map(c=>{const ts=checks(c,pid).map(t=>({key:pid+":"+t[0],page:pid,cat:c.k,label:t[1],custom:t[2],id:t[0]})),np=ts.filter(t=>S.tests[t.key]==="pass").length,nf=ts.filter(t=>S.tests[t.key]==="fail").length,nn=ts.filter(t=>S.tests[t.key]==="na").length,isOpen=catOpen.has(pid+c.k),w=n=>"width:"+(100*n/ts.length)+"%";
        return h("section",{class:"cat"+(isOpen?" open":""),style:"--k:"+c.c},
-        h("button",{type:"button",class:"ch","aria-expanded":isOpen,onclick:()=>{isOpen?catOpen.delete(pid+c.k):catOpen.add(pid+c.k);render()}},h("span",{class:"gl",text:c.g}),h("span",null,h("b",{text:c.n}),h("small",{text:(np+nf+nn)+" of "+ts.length+" checked"+(nf?" · "+nf+" failed":"")})),h("span",{class:"mini"},h("i",{style:w(np)+";background:var(--ok)"}),h("i",{style:w(nf)+";background:var(--bad)"}),h("i",{style:w(nn)+";background:var(--mute)"})),h("span",{class:"chev",text:"▶"})),
+        h("button",{type:"button",class:"ch","aria-expanded":isOpen,onclick:()=>{isOpen?catOpen.delete(pid+c.k):catOpen.add(pid+c.k);render()}},h("span",{class:"gl"+(np+nf+nn===ts.length?(nf?" bad":" good"):""),text:np+nf+nn===ts.length&&!nf?"\u2713":c.g}),h("span",null,h("b",{text:c.n}),h("small",{text:(np+nf+nn)+" of "+ts.length+" checked"+(nf?" · "+nf+" failed":"")})),h("span",{class:"cnt2",text:(np+nf+nn)+" / "+ts.length}),h("span",{class:"mini"},h("i",{style:w(np)+";background:var(--ok)"}),h("i",{style:w(nf)+";background:var(--bad)"}),h("i",{style:w(nn)+";background:var(--mute)"})),h("span",{class:"chev",text:"▶"})),
         isOpen?h("div",{class:"cb"},ts.map(t=>{const v=S.tests[t.key],iss=S.issues.filter(i=>i.test===t.key);
           return h("div",{class:"test "+(v||"")},h("div",{class:"tr",onmouseenter:()=>{hov=t},onmouseleave:()=>{if(hov&&hov.key===t.key)hov=null}},h("span",null,t.label,t.custom?h("button",{type:"button",class:"btn sm x",style:"margin-left:8px",text:"remove","aria-label":"Remove this check",onclick:()=>{S.custom=S.custom.filter(x=>x.id!==t.id);dirty();render()}}):null),
              h("div",{class:"res",role:"group","aria-label":t.label},[["pass","Pass"],["fail","Fail"],["na","N/A"]].map(([k,l])=>h("button",{type:"button",class:k,"aria-pressed":v===k,text:l,onclick:()=>setTest(t,k)})))),
@@ -394,10 +438,10 @@ const VIEW={
    const cols=[["To fix","var(--bad)",i=>["open","reopened"].includes(i.status)],["Fixed, to retest","var(--warn)",i=>i.status==="fixed"],["Closed","var(--ok)",i=>!unresolved(i)]],nRt=S.issues.filter(i=>i.status==="fixed").length;
    const act=(i,st,msg)=>{if(st==="reopened")i.rounds=String((Number(i.rounds)||0)+1);i.status=st;dirty();render();toast("#"+i.id+" "+msg)};
    const sel=(k,all,opts)=>{const s=h("select",{"aria-label":all},[["",all],...opts].map(o=>h("option",{value:o[0],text:o[1]})));s.value=fl[k];s.addEventListener("change",()=>{fl[k]=s.value;render()});return s};
-   return [h("div",{class:"tool"},h("h2",{text:fix?"Issues to fix":"All issues"}),sel("page","All pages",[...S.pages.map(p=>[String(p.id),p.name||"(unnamed)"]),["site","Whole site"]]),sel("cat","All categories",Object.values(CAT).map(c=>[c.k,c.n])),sel("sev","All severities",Object.entries(SEV).map(([k,v])=>[k,v[0]])),
+   return [band(fix?"Issues to fix":"All issues",fix?"Most serious first. Mark an issue Fixed and add a short note, then send the review back.":"Every failed check lands here. Open a card to complete it, and move it along as the developer answers."),h("div",{class:"tool"},sel("page","All pages",[...S.pages.map(p=>[String(p.id),p.name||"(unnamed)"]),["site","Whole site"]]),sel("cat","All categories",Object.values(CAT).map(c=>[c.k,c.n])),sel("sev","All severities",Object.entries(SEV).map(([k,v])=>[k,v[0]])),
      h("span",{class:"sp row"},!fix&&nRt?h("button",{type:"button",class:"btn gold",text:"Start the retest ("+nRt+")",onclick:()=>{retest=true;render()}}):null,fix?null:h("button",{type:"button",class:"btn main",text:"+ New issue",onclick:()=>{const i=newIssue({});drawer=i.id;render()}}))),
-    h("p",{class:"lead",text:fix?"Most serious first. Mark an issue Fixed and add a short note, then send the review back.":"Every failed check lands here. Open a card to complete it, and move it along as the developer answers."}),
-    h("div",{class:"cols"},cols.map(([n,k,f])=>{const l=L.filter(f);return h("div",{class:"col",style:"--k:"+k},h("h3",null,n,h("span",{text:String(l.length)})),l.length?null:why("Nothing here."),l.map(i=>h("div",{class:"ic t-"+i.sev},
+    S.issues.length?null:h("div",{class:"empty"},h("b",{text:"No issue yet"}),h("span",{text:"Mark a check as Fail in the test plan and an issue opens right under it. Everything you report gathers on this board, the most serious first."}),h("div",{class:"row"},h("button",{type:"button",class:"btn main",text:"Go to the test plan",onclick:()=>go("plan")}))),
+    h("div",{class:"cols"},cols.map(([n,k,f],ci)=>{const l=L.filter(f),hint=["A failed check opens an issue here.","Fixes waiting for a retest appear here.","Verified issues end up here."][ci];return h("div",{class:"col",style:"--k:"+k},h("h3",null,n,h("span",{text:String(l.length)})),l.length?null:why(hint),l.map(i=>h("div",{class:"ic t-"+i.sev},
       h("div",{class:"row"},h("small",{text:"#"+i.id}),h("em",{class:"tag t-"+i.sev,text:SEV[i.sev][0]}),i.status==="reopened"?h("em",{class:"tag t-block",text:"Reopened"}):null,i.status==="wontfix"?h("em",{class:"tag t-idea",text:"Will not fix"}):null,missing(i).length&&!fix?h("em",{class:"tag t-major",text:"Incomplete"}):null),
       h("button",{type:"button",class:"tt",text:iTitle(i),onclick:()=>{drawer=i.id;render()}}),
       h("small",null,h("span",{class:"dot",style:"--k:"+CAT[i.cat].c}),pName(i.page)+" · "+CAT[i.cat].n),
@@ -425,7 +469,7 @@ const VIEW={
    card("How the loop works",h("div",{class:"steps"},[["1. You test","Go through the plan. Each Fail becomes a complete issue."],["2. They fix","The developer opens the review, chooses \"I am fixing\" and marks issues Fixed with a note."],["3. You retest","Open what they return and start the retest: Verified or Reopened, one by one."],["4. You decide","The verdict turns green when nothing blocking or major is left."]].map(([a,b])=>h("div",null,h("b",{text:a}),h("br"),h("span",{class:"why",text:b})))))]},
 
  setup:()=>{const bm="javascript:(function(){var s=String(window.getSelection()).slice(0,400);window.open('"+location.origin+location.pathname+"#new='+encodeURIComponent(JSON.stringify({u:location.href,t:document.title.slice(0,120),s:s,w:window.innerWidth,h:window.innerHeight})))})()";
-   return [h("h2",{text:"The site to test"}),h("p",{class:"lead",text:"Name the delivery, list the pages and choose the devices. The test plan is built from this."}),
+   return [band("The site to test","Name the delivery, list the pages and choose the devices. The test plan is built from this."),
    card("The delivery",h("div",{class:"g2"},fld(S.proj,"name","Site or project name",{ph:"Atelier Nour",max:60}),fld(S.proj,"url","Address to test (staging or live)",{ph:"staging.yoursite.com",max:140}),fld(S.proj,"round","Delivery or version",{ph:"Delivery 1",max:40}),fld(S.proj,"tester","Tested by",{ph:"Your name",max:60}),fld(S.proj,"contact","Developer or agency",{ph:"Name of your tech contact",max:60}))),
    card("The pages",h("table",{class:"t"},h("thead",null,h("tr",null,h("th",{text:"Page"}),h("th",{text:"Address after the site name"}),h("th"))),h("tbody",null,S.pages.map((p,i)=>h("tr",null,h("td",null,fld(p,"name","Page name",{bare:1,ph:"Services",max:80})),h("td",null,fld(p,"path","Path",{bare:1,ph:"/services",max:160})),h("td",null,S.pages.length>1?h("button",{type:"button",class:"btn x","aria-label":"Remove "+p.name,text:"✕",onclick:()=>{S.pages.splice(i,1);if(cur===p.id)cur=S.pages[0].id;dirty();render()}}):null))))),
      h("div",{class:"row"},h("button",{type:"button",class:"btn main",text:"+ Add a page",onclick:()=>{const id=Math.max(0,...S.pages.map(p=>p.id))+1;S.pages.push({id,name:"",path:""});dirty();render();const ins=document.querySelectorAll("#main table input");ins[ins.length-2].focus()}}),h("span",{class:"why",text:allTests().length+" checks in the plan for "+S.pages.length+(S.pages.length===1?" page.":" pages.")}))),
@@ -508,8 +552,8 @@ function drawBar(){const b=$("demo");b.hidden=!demo.on;if(!demo.on)return;b.inne
     :[h("button",{type:"button",class:"btn sm",text:demo.play?"Pause":"Play",onclick:()=>{demo.play=!demo.play;drawBar();if(demo.play)advance(demo.token)}}),h("button",{type:"button",class:"btn sm",text:"Next",onclick:()=>{if(n+1<N2)runStep(n+1);else{demo.done=true;demo.token++;drawBar()}}}),h("button",{type:"button",class:"btn sm",text:"Exit the demo",onclick:()=>endDemo(false)})]))}
 async function advance(tok){await wait(3600);if(tok!==demo.token||!demo.play||!demo.on)return;if(demo.i+1<DSTEPS.length)runStep(demo.i+1);else{demo.done=true;drawBar()}}
 async function runStep(n){demo.i=n;const tok=++demo.token;drawBar();try{await DSTEPS[n][1](tok)}catch(e){}if(tok!==demo.token)return;if(demo.play)advance(tok)}
-function startDemo(){if(!demo.on)demo.backup=S;demo.on=true;demo.done=false;demo.play=true;S=DEMO();drawer=null;retest=false;catOpen.clear();qrOpen.clear();fl.page=fl.cat=fl.sev="";window.scrollTo({top:0});runStep(0)}
-function endDemo(start){demo.on=false;demo.token++;S=demo.backup||normalize(BLANK());demo.backup=null;drawer=null;retest=false;catOpen.clear();qrOpen.clear();cur=S.pages[0].id;sec=start&&fresh()?"setup":"plan";drawBar();render();window.scrollTo({top:0})}
+function startDemo(){if(!demo.on)demo.backup=S;demo.on=true;document.body.classList.add("demo");demo.done=false;demo.play=true;S=DEMO();drawer=null;retest=false;catOpen.clear();qrOpen.clear();fl.page=fl.cat=fl.sev="";window.scrollTo({top:0});runStep(0)}
+function endDemo(start){demo.on=false;document.body.classList.remove("demo");demo.token++;S=demo.backup||normalize(BLANK());demo.backup=null;drawer=null;retest=false;catOpen.clear();qrOpen.clear();cur=S.pages[0].id;sec=start&&fresh()?"setup":"plan";drawBar();render();window.scrollTo({top:0})}
 
 // ---------- render ----------
 const NAV=[["plan","Test plan",()=>cov(allTests())+"%"],["board","Issues",()=>S.issues.filter(unresolved).length],["hand","Hand over",()=>null],["setup","Site and pages",()=>S.pages.length]];
@@ -526,8 +570,10 @@ $("rTest").addEventListener("click",()=>{S.role="test";save();render()});
 $("rFix").addEventListener("click",()=>{S.role="fix";save();sec="board";render()});
 $("demoB").addEventListener("click",startDemo);
 $("shareB").addEventListener("click",()=>go("hand"));
-$("saveF").addEventListener("click",saveFile);
-$("openF").addEventListener("click",()=>$("file").click());
+$("saveF").addEventListener("click",()=>{$("fileMenu").open=false;saveFile()});
+$("ribX").addEventListener("click",()=>endDemo(false));
+document.addEventListener("click",e=>{const m=$("fileMenu");if(m.open&&!m.contains(e.target))m.open=false});
+$("openF").addEventListener("click",()=>{$("fileMenu").open=false;$("file").click()});
 $("file").addEventListener("change",e=>{if(e.target.files[0])openFile(e.target.files[0]);e.target.value=""});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&(drawer||retest)){drawer=null;retest=false;render();return}
   if(!hov||sec!=="plan"||e.ctrlKey||e.metaKey||e.altKey||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;const k={p:"pass",f:"fail",n:"na"}[e.key.toLowerCase()];if(k){const t=hov;hov=null;setTest(t,k)}});
