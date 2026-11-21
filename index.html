@@ -146,6 +146,8 @@ table.t td{padding:4px 6px;vertical-align:top}
 @keyframes fade{from{opacity:0}}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100vw);background:var(--card);z-index:51;box-shadow:-20px 0 50px rgba(0,0,0,.25);padding:18px;overflow:auto;display:grid;gap:12px;align-content:start;animation:slide .25s cubic-bezier(.2,.8,.2,1)}
 @keyframes slide{from{transform:translateX(40px);opacity:0}}
+.drawer .g2,.drawer .g3{grid-template-columns:1fr}
+.drawer .sev{display:grid;grid-template-columns:1fr 1fr}
 .modal{position:fixed;inset:0;z-index:51;display:grid;place-items:center;padding:20px;pointer-events:none}
 .modal>div{pointer-events:auto;width:min(620px,100%);background:var(--card);border-radius:20px;padding:22px;display:grid;gap:14px;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:drop .25s}
 .ro{display:grid;gap:8px;font-size:.93rem}
