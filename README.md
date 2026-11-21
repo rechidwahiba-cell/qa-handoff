@@ -20,4 +20,8 @@ A single HTML file with no framework, no build step and no server. Reviews are s
 
 It does not capture screenshots and two people cannot edit the same review at the same time: the review travels as a link or a file.
 
-By [Wahiba Rechid](https://wahiba-rechid.vercel.app/), built with an AI coding assistant.
+By W.R., built with an AI coding assistant.
+
+## Disclaimer
+
+This tool was developed independently by one person, from personal professional experience. It is a free aid provided as is, for general information only, with no guarantee that it is complete, accurate, up to date or suited to your situation. It is not professional, legal or technical advice. You are solely responsible for how you use it and for the decisions you make with it, and the author accepts no liability for any loss or damage arising from its use. Product and company names are mentioned for reference only: this tool is not affiliated with or endorsed by any of them.
